@@ -7,7 +7,7 @@ namespace LLVG20240312.Models
     {
         public Cliente()
         {
-            NumerosTelefonos = new HashSet<NumerosTelefono>();
+            NumerosTelefono = new List<NumerosTelefono>();
         }
 
         public int IdCliente { get; set; }
@@ -15,6 +15,6 @@ namespace LLVG20240312.Models
         public string? Direccion { get; set; }
         public string? CorreoElectronico { get; set; }
 
-        public virtual ICollection<NumerosTelefono> NumerosTelefonos { get; set; }
+        public virtual IList<NumerosTelefono> NumerosTelefono { get; set; }
     }
 }
