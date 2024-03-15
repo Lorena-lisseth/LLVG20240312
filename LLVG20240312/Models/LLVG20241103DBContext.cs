@@ -69,7 +69,7 @@ namespace LLVG20240312.Models
                     .HasColumnName("tipo_telefono");
 
                 entity.HasOne(d => d.IdClienteNavigation)
-                    .WithMany(p => p.NumerosTelefono)
+                    .WithMany(p => p.NumerosTelefonos)
                     .HasForeignKey(d => d.IdCliente)
                     .HasConstraintName("FK__NumerosTe__id_cl__398D8EEE");
             });

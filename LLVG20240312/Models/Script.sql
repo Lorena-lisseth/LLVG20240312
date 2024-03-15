@@ -1,6 +1,6 @@
 -- Creación de la base de datos LRVG20241103DB
-CREATE DATABASE LLVG20241103DB;
-USE LLVG20241103DB;
+CREATE DATABASE LLVG20241403DB;
+USE LLVG20241403DB;
 
 CREATE TABLE Clientes (
     id_cliente INT IDENTITY(1, 1) PRIMARY KEY,
@@ -16,5 +16,5 @@ CREATE TABLE NumerosTelefonos (
     numero_telefono VARCHAR(9),
     tipo_telefono VARCHAR(50), -- Ejemplo: "Casa", "Trabajo", "Móvil", etc.
     -- Otros campos adicionales que desees agregar
-    FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente)
+    FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente) ON DELETE CASCADE
 );

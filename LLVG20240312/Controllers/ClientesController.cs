@@ -21,7 +21,7 @@ namespace LLVG20240312.Controllers
         // GET: Clientes
         public async Task<IActionResult> Index()
         {
-              return _context.Clientes != null ? 
+              return _context.Clientes != null ?
                           View(await _context.Clientes.ToListAsync()) :
                           Problem("Entity set 'LLVG20241103DBContext.Clientes'  is null.");
         }
@@ -35,7 +35,7 @@ namespace LLVG20240312.Controllers
             }
 
             var cliente = await _context.Clientes
-                 .Include(s => s.NumerosTelefono)
+                 .Include(s => s.NumerosTelefonos)
                 .FirstOrDefaultAsync(m => m.IdCliente == id);
             if (cliente == null)
             {
@@ -49,8 +49,8 @@ namespace LLVG20240312.Controllers
         public IActionResult Create()
         {
             var cliente = new Cliente();
-            cliente.NumerosTelefono = new List<NumerosTelefono>();
-            cliente.NumerosTelefono.Add(new NumerosTelefono
+            cliente.NumerosTelefonos = new List<NumerosTelefono>();
+            cliente.NumerosTelefonos.Add(new NumerosTelefono
             {
             });
             ViewBag.Accion = "Create";
@@ -62,7 +62,7 @@ namespace LLVG20240312.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdCliente,Nombre,Direccion,CorreoElectronico, NumerosTelefono")] Cliente cliente)
+        public async Task<IActionResult> Create([Bind("IdCliente,Nombre,Direccion,CorreoElectronico, NumerosTelefonos")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
@@ -72,22 +72,22 @@ namespace LLVG20240312.Controllers
             }
             return View(cliente);
         }
-        public ActionResult AgregarDetalles([Bind("Id,Nombre,Apellido,NumerosTelefono")] Cliente cliente, string accion)
+        public ActionResult AgregarDetalles([Bind("IdCliente,Nombre,Direccion,CorreoElectronico,NumerosTelefonos")] Cliente cliente, string accion)
         {
-            cliente.NumerosTelefono.Add(new NumerosTelefono { });
+            cliente.NumerosTelefonos.Add(new NumerosTelefono { });
             ViewBag.Accion = accion;
             return View(accion, cliente);
         }
-        public ActionResult EliminarDetalles([Bind("Id,Nombre,Apellido,NumerosTelefono")] Cliente cliente, int index, string accion)
+        public ActionResult EliminarDetalles([Bind("IdCliente,Nombre,Direccion,CorreoElectronico,NumerosTelefonos")] Cliente cliente, int index, string accion)
         {
-            var det = cliente.NumerosTelefono[index];
+            var det = cliente.NumerosTelefonos[index];
             if (accion == "Edit" && det.IdTelefono > 0)
             {
                 det.IdTelefono = det.IdTelefono * -1;
             }
             else
             {
-                cliente.NumerosTelefono.RemoveAt(index);
+                cliente.NumerosTelefonos.RemoveAt(index);
             }
 
             ViewBag.Accion = accion;
@@ -114,7 +114,7 @@ namespace LLVG20240312.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdCliente,Nombre,Direccion,CorreoElectronico")] Cliente cliente)
+        public async Task<IActionResult> Edit(int id, [Bind("IdCliente,Nombre,Direccion,CorreoElectronico,NumerosTelefono")] Cliente cliente)
         {
             if (id != cliente.IdCliente)
             {
@@ -153,12 +153,13 @@ namespace LLVG20240312.Controllers
             }
 
             var cliente = await _context.Clientes
+                 .Include(s => s.NumerosTelefonos)
                 .FirstOrDefaultAsync(m => m.IdCliente == id);
             if (cliente == null)
             {
                 return NotFound();
             }
-
+            ViewBag.Accion = "Delete";
             return View(cliente);
         }
 
