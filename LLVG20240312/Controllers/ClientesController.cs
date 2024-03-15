@@ -143,7 +143,7 @@ namespace LLVG20240312.Controllers
                 var detUpdate = cliente.NumerosTelefonos.Where(s => s.IdCliente > 0);
                 foreach (var d in detUpdate)
                 {
-                    var det = facturaUpdate.NumerosTelefonos.FirstOrDefault(s => s.IdCliente == d.IdTelefono);
+                    var det = facturaUpdate.NumerosTelefonos.FirstOrDefault(s => s.IdCliente == d.IdCliente);
                     det.NumeroTelefono = d.NumeroTelefono;
                     det.TipoTelefono = d.TipoTelefono;
 

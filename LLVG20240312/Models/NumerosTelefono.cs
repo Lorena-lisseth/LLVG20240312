@@ -13,6 +13,6 @@ namespace LLVG20240312.Models
         [Display(Name = "Tipo de Telefono")]
         public string? TipoTelefono { get; set; }
 
-        public virtual Cliente IdClienteNavigation { get; set; }
+        public virtual Cliente? IdClienteNavigation { get; set; }
     }
 }
